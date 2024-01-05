@@ -1,0 +1,37 @@
+.enviado{
+    color: rgb(119, 255, 76, 0.776);
+    width: 2rem;
+}
+.enCamino{
+    color: rgb(253, 144, 42);
+    width: 2rem;
+}
+.cancelado{
+    color: rgb(255, 0, 0);
+    width: 2rem;
+}
+.link{
+    text-decoration: none;
+    font-weight: bold;
+    font-size:0.8rem;
+}
+.link:hover{
+    color: rgb(254, 80, 202);
+    font-size: 1rem;
+    transition: 0.1s ease;
+}
+.MuiTableRow-root>*{
+    padding: 10px;
+}
+
+.MuiTableRow-root.MuiTableRow-head>*{
+    font-weight: bold !important;
+}
+
+.Table td, th{
+    border: none !important;
+}
+
+.Table:first-child{
+    border-radius:0.7rem
+}
