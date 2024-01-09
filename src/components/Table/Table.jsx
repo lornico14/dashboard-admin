@@ -22,6 +22,7 @@ export default function BasicTable() {
       style={{boxShadow: '0px 13px 20px 0px #80808029'}}
       
       >
+      <div className="table-bg">
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
@@ -34,8 +35,8 @@ export default function BasicTable() {
           <TableBody>
             {tableData.map((row) => (
               <TableRow
-                key={row.name}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              key={row.name}
+              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
                   <a className="link" href={row.link}>
@@ -60,14 +61,15 @@ export default function BasicTable() {
                     <UilEnvelopeCheck className="enviado" />
                   ) : row.status === "Pendiente" ? (
                     <UilEnvelopeDownloadAlt className="enCamino" />
-                  ) : (
-                    <UilEnvelopeExclamation className="cancelado" />
-                  )}
+                    ) : (
+                      <UilEnvelopeExclamation className="cancelado" />
+                      )}
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
+        </div>
       </TableContainer>
     </div>
   );

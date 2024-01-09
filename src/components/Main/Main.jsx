@@ -2,11 +2,10 @@ import React from 'react'
 import './Main.css'
 import Cards from '../Cards/Cards'
 import Table from '../Table/Table'
-const Main = () => {
+const Main = (props) => {
   return (
     <div className="main">
-        <h1 className="heading"> Main Component
-        </h1>
+        <h1 className="heading"> Home</h1>
         <Cards />
         <Table />
     

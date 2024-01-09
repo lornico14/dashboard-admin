@@ -1,0 +1,6 @@
+@media screen and (max-width: 768px){
+    .midside{
+        align-items: center;
+        width: 80%;
+    }
+}
