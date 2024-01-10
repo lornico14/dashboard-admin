@@ -295,3 +295,28 @@ export const stockTable = [
     img: "https://www.fullh4rd.com.ar/img/productos/3/video-geforce-rtx-3070-8gb-gigabyte-gaming-oc-0.jpg",
   }
 ];
+
+export const stockTableGrid = [
+  [
+    { field: 'id', headerName: 'ID', width: 70 },
+    { field: 'marca', headerName: 'Marca', width: 130 },
+    { field: 'modelo', headerName: 'Modelo', width: 130 },
+    { field: 'fabricante', headerName: 'Fabricante', width: 130 },
+    { field: 'vram', headerName: 'VRAM', width: 90 },
+    { field: 'precio', headerName: 'Precio', width: 90 },
+    { field: 'stock', headerName: 'Stock', width: 90 },
+  ],
+  [
+    ...stockTable.map((item) => {
+      return {
+        id: item.id,
+        marca: item.marca,
+        modelo: item.modelo,
+        fabricante: item.fabricante,
+        vram: item.vram,
+        precio: item.precio,
+        stock: item.stock,
+      };
+    }),
+  ],
+];
