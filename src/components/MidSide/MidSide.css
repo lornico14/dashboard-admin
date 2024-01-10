@@ -1,3 +1,14 @@
+.midside{
+    align-items: center;
+    width: 95%;
+    height: 100%;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin: 0 20px;
+    overflow: auto;
+}
+
 @media screen and (max-width: 768px){
     .midside{
         align-items: center;

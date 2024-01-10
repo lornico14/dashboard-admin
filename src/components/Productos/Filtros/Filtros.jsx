@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Autocomplete,
   Box,
@@ -15,73 +15,40 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { RestartAlt,Add, Remove } from "@mui/icons-material";
-import { filters } from '../../../Data/data.js'
+import { RestartAlt, Add, Remove } from "@mui/icons-material";
+import { filters } from "../../../Data/data.js";
 
 
-const Filtros = ({onFilterChange}) => {
-  const [openFilters, setOpenFilters] = React.useState({});
-  const [filterValues, setFilterValues] = React.useState({});
+const Filtros = ({ filteredStock, onFilterChange }) => {
+  const [openFilters, setOpenFilters] = useState({});
+  const [filterValues, setFilterValues] = useState({});
 
-  const handleToggleFilter = (filterLabel) => {
-    setOpenFilters((prevOpenFilters) => ({
-      ...prevOpenFilters,
-      [filterLabel]: !prevOpenFilters[filterLabel],
-    }));
+  const handleCheckboxChange = (e) => {
+    const selectedCategory = e.target.value;
+    setFilterValues({ checkbox: selectedCategory });
+    onFilterChange({ checkbox: selectedCategory });
   };
 
-  const handleFilterChange = (event) => {
-    setFilterValues((prevFilterValues) => ({
-      ...prevFilterValues,
-      [event.target.name]: event.target.value,
-    }));
-    // Llama a la función onFilterChange con los nuevos valores de filtro
-    onFilterChange({
-      ...filterValues,
-      [event.target.name]: event.target.value,
-    });
+  const handleFilterChange = (e, value, filterLabel) => {
+    setFilterValues({ [filterLabel]: value });
+    onFilterChange({ [filterLabel]: value });
   };
 
-  const handleAutocompleteChange = (event, value, filterLabel) => {
-    setFilterValues((prevFilterValues) => ({
-      ...prevFilterValues,
-      [filterLabel]: value,
-    }));
-    // Llama a la función onFilterChange con los nuevos valores de filtro
-    onFilterChange({
-      ...filterValues,
-      [filterLabel]: value,
-    });
-  };
 
-  const handleCheckboxChange = (event) => {
-    setFilterValues((prevFilterValues) => ({
-      ...prevFilterValues,
-      [event.target.name]: event.target.checked
-        ? [...(prevFilterValues[event.target.name] || []), event.target.value]
-        : prevFilterValues[event.target.name].filter(
-            (value) => value !== event.target.value
-          ),
-    }));
-    // Llama a la función onFilterChange con los nuevos valores de filtro
-    onFilterChange({
-      ...filterValues,
-      [event.target.name]: event.target.checked
-        ? [...(filterValues[event.target.name] || []), event.target.value]
-        : filterValues[event.target.name].filter(
-            (value) => value !== event.target.value
-          ),
-    });
-  };
-
-  const handleResetAll = () => {
-    setOpenFilters({});
+  const handleResetFilters = () => {
     setFilterValues({});
-    // Llama a la función onFilterChange con un objeto vacío para reiniciar los filtros
     onFilterChange({});
   };
+
   return (
-    <Box sx={{ bgcolor: "rgba(255, 255, 255, 0.35)", borderRadius: "1rem", width: "88%", p: "1rem", }}>
+    <Box
+      sx={{
+        bgcolor: "rgba(255, 255, 255, 0.35)",
+        borderRadius: "1rem",
+        width: "88%",
+        p: "1rem",
+      }}
+    >
       <Box
         display="flex"
         justifyContent="space-between"
@@ -91,18 +58,27 @@ const Filtros = ({onFilterChange}) => {
         <Box fontSize="h6.fontSize" fontWeight="bold">
           Filtrar
         </Box>
-        <Button size="sm" variant="text" color="primary" onClick={handleResetAll}>
-          <RestartAlt 
-          sx={{
-            color: "#FF919D",
-            marginLeft: "0.5rem"
-          }}/>
+        <Button size="sm" variant="text" color="primary" onClick ={handleResetFilters}>
+          <RestartAlt
+            sx={{
+              color: "#FF919D",
+              marginLeft: "0.5rem",
+            }}
+          />
         </Button>
       </Box>
       <List>
         {filters.map((filter, index) => (
           <React.Fragment key={filter.label}>
-            <ListItem button onClick={() => handleToggleFilter(filter.label)}>
+            <ListItem
+              button
+              onClick={() =>
+                setOpenFilters((prevOpenFilters) => ({
+                  ...prevOpenFilters,
+                  [filter.label]: !prevOpenFilters[filter.label],
+                }))
+              }
+            >
               <ListItemText primary={filter.label} />
               {openFilters[filter.label] ? (
                 <Remove sx={{ color: filter.required ? "#FF919D" : undefined }} />
@@ -123,7 +99,7 @@ const Filtros = ({onFilterChange}) => {
                       <TextField {...params} label={filter.label} fullWidth />
                     )}
                     onChange={(event, value) =>
-                      handleAutocompleteChange(event, value, filter.label)
+                      handleFilterChange(event, value, filter.label)
                     }
                     sx={{
                       width: "100%",
@@ -142,7 +118,9 @@ const Filtros = ({onFilterChange}) => {
                       label={filter.label}
                       name={filter.label}
                       value={filterValues[filter.label] || ""}
-                      onChange={handleFilterChange}
+                      onChange={(event) =>
+                        handleFilterChange(event, event.target.value, filter.label)
+                      }
                     >
                       {filter.options.map((option) => (
                         <MenuItem key={option} value={option}>
